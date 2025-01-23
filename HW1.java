@@ -1,6 +1,6 @@
 
 /*
- * *** PLACE YOUR NAME / SECTION  HERE ***
+ * *** Jonah Goldberg-Finkelstein / Section 002 ***
  *
  * Homework # 1 (Programming Assignment). This Java class defines some basic
  * manipulation operations on Linked-Lists and Stacks.
@@ -11,6 +11,7 @@
  * specific number returned.
  */
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class HW1 {
@@ -89,6 +90,37 @@ public class HW1 {
 
             // YOUR CODE GOES HERE
 
+            //If the linkedlist is null then no changes need to be made
+            if(this.head == null) {
+                //Return without making any changes
+                return;
+            }
+
+            //keep removing the first node while its less than ltValue
+            while(this.head != null && this.head.data < ltValue) {
+                this.head = this.head.next;
+            }
+
+            //Pointer for the current node starting at head
+            Node current = this.head;
+            
+            //Pointer for the previous node starting at null
+            Node prev = null;
+
+            //Loop through the linked list while the current node is not null
+            while(current != null) {
+                //If current node is less than the ltValue
+                if(current.data < ltValue) {
+                    //Remove the node by skipping it
+                    prev.next = current.next;
+                } else {
+                    //We should only update the previous node when the current one is not removed
+                    prev = current; 
+                }
+                //Move to the next node
+                current = current.next;
+            }
+
             return;
         }
 
@@ -101,6 +133,35 @@ public class HW1 {
         public void removeElement ( int value ) {
 
             // YOUR CODE GOES HERE
+            //If linked list is empty then no changes need to be made
+            if(this.head == null) {
+                return;
+            }
+
+            //Keep removing the first node while its equal to target value
+            while(this.head != null && this.head.data == value) {
+                this.head = this.head.next;
+            }
+
+            //Pointer for the current node starting at head
+            Node current = this.head;
+
+            //Pointer for the previous node starting at null
+            Node prev = null;
+
+            //Loop through the linked list while the current node is not null
+            while(current != null) {
+                //If current node equals the target value then remove it
+                if(current.data == value) {
+                    //Remove the node by skipping it
+                    prev.next = current.next;
+                } else {
+                    //We should only update the previous node when the current one is not removed
+                    prev = current; 
+                }
+                //Move to the next node
+                current = current.next;
+            }
 
             return;
         }
@@ -156,12 +217,29 @@ public class HW1 {
          * The method should utilize the provided Stack class.
          */
         public static boolean isPalindrome(String input) {
-
+            // Your CODE GOES HERE
             Stack<Character> stack = new Stack<>();
             input = input.toLowerCase().replaceAll("\\s+", "");
 
-            // Your CODE GOES HERE
-            return false;
+            //iterate through the input string and add to the stack 
+            for(int i = 0; i < input.length(); i++) {
+                stack.push(input.charAt(i));
+            }
+
+            //Length of input and stack length are the same
+            for(int i = 0; i < input.length(); i++) {
+                //Check if the top of the stack is not equal to the corresponding input 
+                if(stack.peek() != input.charAt(i)) {
+                    //Return false as it is not a palindrom
+                    return false;
+                } else {
+                    //If they are the same then pop the top of the stack
+                    stack.pop();
+                }
+            }
+
+            //The stack and input were the same so we return true that it is a palindrome
+            return true;
         }
 
 
@@ -181,9 +259,23 @@ public class HW1 {
          * completed, place them all back in teh original stack.
          */
         public static int findLargestK(Stack<Integer> stack, int k) {
-
             // YOUR CODE GOES HERE
-            return -1;
+
+            //Holds the current largest index
+            int currLargest = -1;
+
+            //Copy the stack into an array list
+            ArrayList<Integer> list = new ArrayList<>(stack);
+
+            //Loop through the array list 
+            for(int i = 0; i < list.size(); i++) {
+                //If the current index equals k then update the current largest with that index
+                if(list.get(i) == k) {
+                    currLargest = i;
+                }
+            }
+            //Return the largest index
+            return currLargest;
         }
 
     }  // End class Stacks
@@ -219,7 +311,7 @@ public class HW1 {
         */
 
         // RETURN THE CORRECT OPTION NUMBER LISTED ABOVE
-        return -1;
+        return 3;
     }
 
 
@@ -240,7 +332,7 @@ public class HW1 {
          */
 
         // RETURN THE CORRECT OPTION LISTED ABOVE
-        return -1;
+        return 2;
     }
 
 }
